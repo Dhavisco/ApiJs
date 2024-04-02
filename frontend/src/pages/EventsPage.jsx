@@ -3,7 +3,8 @@ import EventsList from "../components/EventsList";
 
 function EventsPage() {
  
-const events = useLoaderData();
+const data = useLoaderData();
+const events = data.events;
  
   return (
     <>
@@ -18,9 +19,9 @@ export async function loader() {
    const response = await fetch("http://localhost:8080/events");
 
    if (!response.ok) {
-     // ....
+    //  return {isError: true, error: "Error fetching events"};
+    throw {message: 'Could not retrieve events'}
    } else {
-     const resData = await response.json();
-     return resData.events;
+    return response;
    }
 }
