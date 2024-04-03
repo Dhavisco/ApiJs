@@ -2,13 +2,17 @@
 
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import HomePage from "./pages/HomePage";
-import EventsPage, {loader as eventsLoader} from "./pages/EventsPage";
-import EventDetailPage, {loader as eventDetailLoader, action as deleteEventAction} from "./pages/EventDetailPage";
-import NewEventPage, {action as newEventAction} from "./pages/NewEventPage";
+import EventsPage, { loader as eventsLoader } from "./pages/EventsPage";
+import EventDetailPage, {
+  loader as eventDetailLoader,
+  action as deleteEventAction,
+} from "./pages/EventDetailPage";
+import NewEventPage from "./pages/NewEventPage";
 import EditEventPage from "./pages/EditEventPage";
 import RootLayout from "./pages/Root";
 import ErrorPage from "./pages/Error";
 import EventLayout from "./pages/EventLayout";
+import { action as manipulateEventAction } from "./components/EventForm";
 
 // 1. Add five new (dummy) page components (content can be simple <h1> elements)
 //    - HomePage
@@ -29,7 +33,6 @@ import EventLayout from "./pages/EventLayout";
 //    Every list item should include a link to the respective EventDetailPage
 // 7. Output the ID of the selected event on the EventDetailPage
 // BONUS: Add another (nested) layout route that adds the <EventNavigation> component above all /events... page components
-
 
 //using the routing technique learnt in the course
 
@@ -53,12 +56,12 @@ const router = createBrowserRouter([
               {
                 index: true,
                 element: <EventDetailPage />,
-                action: deleteEventAction
+                action: deleteEventAction,
               },
-              { path: "edit", element: <EditEventPage /> },
+              { path: "edit", element: <EditEventPage />, action:manipulateEventAction },
             ],
           },
-          { path: "new", element: <NewEventPage />, action: newEventAction },
+          { path: "new", element: <NewEventPage />, action: manipulateEventAction },
         ],
       },
     ],
@@ -66,7 +69,7 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  return <RouterProvider router={router}/>;
+  return <RouterProvider router={router} />;
 }
 
 export default App;
